@@ -1,2 +1,2 @@
-# charts
+# helm-charts
 srvd chart repo
