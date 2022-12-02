@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.gameServer.gameType }}
+  labels:
+    gamename: "{{ .Values.deploymentLabels.gameName }}"
+    custguild: "{{ .Values.deploymentLabels.customerGuildID }}"
+    app: {{ .Values.gameServer.gameType }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.gameServer.gameType }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.gameServer.gameType }}
+    spec:
+      initContainers:
+      - name: volume-mount-hack-{{ .Values.gameServer.gameType }}
+        image: busybox
+        command: ["sh", "-c", "chown -R 1000:1000 {{ .Values.gameServer.volume }}"]
+        volumeMounts:
+        - name: data
+          mountPath: {{ .Values.gameServer.volume }}
+      containers:
+      - name: {{ .Values.gameServer.gameType }}
+        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        imagePullPolicy: Always
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+
+        env:
+          {{- if .Values.env }}
+{{ toYaml .Values.env | indent 10 }}
+          {{- end }}
+
+        ports:
+        {{ if .Values.gameServer.ports.tcp }}
+        {{- range .Values.gameServer.ports.tcp }}
+        - name: tcp-{{ . }}
+          containerPort: {{ . }}
+          protocol: TCP
+        {{- end }}
+        {{- end }}
+        {{ if .Values.gameServer.ports.udp }}
+        {{- range .Values.gameServer.ports.udp }}
+        - name: udp-{{ . }}
+          containerPort: {{ . }}
+          protocol: UDP
+        {{- end }}
+        {{- end }}
+        volumeMounts:
+{{ if .Values.gameServer.volume }}
+        - name: data
+          mountPath: {{ .Values.gameServer.volume }}
+{{- end }}
+{{ if .Values.persistence }}
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+{{- if eq .Values.persistence.claimName "" }}
+          claimName: {{ .Values.gameServer.gameType }}-data
+{{- else }}
+          claimName: {{ .Values.persistence.claimName }}
+{{- end }}
+{{- end }}

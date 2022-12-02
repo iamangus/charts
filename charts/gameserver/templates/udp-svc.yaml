@@ -1,0 +1,25 @@
+{{- if .Values.gameServer.ports.udp }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.gameServer.gameType }}-udp
+  labels:
+    app: {{ .Values.gameServer.gameType }}
+  {{- if and (.Values.gameServer.ports.tcp) (.Values.gameServer.ports.udp) }}
+  annotations:
+    metallb.universe.tf/allow-shared-ip: {{ .Values.gameServer.gameType }}
+  {{- end }}
+spec:
+  type: {{ .Values.gameServer.serviceType }}
+  ports:
+  {{- if eq "LoadBalancer" .Values.gameServer.serviceType }}
+  {{- range .Values.gameServer.ports.udp }}
+  - name: udp-{{ randAlphaNum 5 | lower }}
+    port: {{ . }}
+    targetPort: udp-{{ . }}
+    protocol: UDP
+  {{- end }}
+  {{- end }}
+  selector:
+    app: {{ .Values.gameServer.gameType }}
+{{- end }}

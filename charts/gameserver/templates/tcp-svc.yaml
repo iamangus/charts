@@ -1,0 +1,25 @@
+{{- if .Values.gameServer.ports.tcp }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.gameServer.gameType }}-tcp
+  labels:
+    app: {{ .Values.gameServer.gameType }}
+  {{- if and (.Values.gameServer.ports.tcp) (.Values.gameServer.ports.udp) }}
+  annotations:
+    metallb.universe.tf/allow-shared-ip: {{ .Values.gameServer.gameType }}
+  {{- end }}
+spec:
+  type: {{ .Values.gameServer.serviceType }}
+  ports:
+  {{- if eq "LoadBalancer" .Values.gameServer.serviceType }}
+  {{- range .Values.gameServer.ports.tcp }}
+  - name: tcp-{{ randAlphaNum 5 | lower }}
+    port: {{ . }}
+    targetPort: tcp-{{ . }}
+    protocol: TCP
+  {{- end }}
+  {{- end }}
+  selector:
+    app: {{ .Values.gameServer.gameType }}
+{{- end }}

@@ -1,0 +1,37 @@
+#These charts are to deploy a range of gameserver containers created and supported by others.
+image: image/name
+imageTag: latest
+
+# Configure resource requests and limits
+# ref: http://kubernetes.io/docs/user-guide/compute-resources/
+resources:
+  requests:
+    memory: 512Mi
+    cpu: 500m
+
+deploymentLabels:
+  gameName:
+  customerGuildID: 
+
+gameServer:
+  gameType: "gamename" #lowercase
+  ports:
+    tcp: []
+    udp: []
+  serviceType: LoadBalancer
+  volume: # The file location in-pod that the persistant volume should be mounted to
+
+env: {}
+#env:
+#- name: ADMIN_PASS
+#  value: test
+  
+  
+
+#Configure world save persistance
+persistence:
+  config:
+    enabled: true
+    size: 1Gi
+    storageClassName: ""
+  claimName: "" # provide a value to prevent PVC creation
