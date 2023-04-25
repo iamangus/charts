@@ -30,6 +30,8 @@ serviceAccount:
 
 podAnnotations: {}
 
+userName: "angoo" #your username
+
 service:
   type: ClusterIP
   port: 8080
@@ -88,3 +90,11 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+#Configure home dir persistance
+persistence:
+  config:
+    enabled: true
+    size: 100Gi
+    storageClassName: ""
+  claimName: "" # provide a value to prevent PVC creation

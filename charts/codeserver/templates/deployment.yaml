@@ -38,8 +38,10 @@ spec:
 {{ toYaml .Values.extraArgs | indent 10 }}
         {{- end }}
           volumeMounts:
+{{ if .Values.userName }}
           - name: data
-            mountPath: /home/coder
+            mountPath: /home/{{ .Values.userName }}
+{{- end }}
           ports:
             - name: http
               containerPort: 8080
@@ -67,6 +69,12 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       serviceAccountName: {{ template "srvd.serviceAccountName" . }}
+{{ if .Values.persistence }}
       volumes:
       - name: data
-        emptyDir: {}
+        persistentVolumeClaim:
+{{- if eq .Values.persistence.claimName "" }}
+          claimName: {{ .Values.userName }}-data
+{{- else }}
+          claimName: {{ .Values.persistence.claimName }}
+{{- end }}
