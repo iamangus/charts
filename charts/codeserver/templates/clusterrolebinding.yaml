@@ -3,10 +3,10 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
  name: {{ .Release.Namespace }}-clusterrolebinding
 subjects:
-- kind: ServiceAccount
+- kind: User
   name: {{ template "srvd.serviceAccountName" . }}
   namespace: {{ .Release.Namespace }}
 roleRef:
  kind: ClusterRole
- name: admin
+ name: cluster-admin
  apiGroup: rbac.authorization.k8s.io
