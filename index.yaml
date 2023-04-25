@@ -11,4 +11,15 @@ entries:
     urls:
     - https://github.com/iamangus/helm-charts/releases/download/GenericGameServer-1.1/GenericGameServer-1.1.tgz
     version: "1.1"
+  go-code-server:
+  - apiVersion: v2
+    appVersion: "4.12"
+    created: "2023-04-25T03:08:39.422988473Z"
+    description: A Helm chart for iamangus/go-code-server
+    digest: 149f1b51616fb2864f5550590403e9cc0647ca590b5f67a5470adf2bbf71658d
+    name: go-code-server
+    type: application
+    urls:
+    - https://github.com/iamangus/helm-charts/releases/download/go-code-server-1/go-code-server-1.tgz
+    version: "1"
 generated: "2022-12-02T05:59:11.559989952Z"
