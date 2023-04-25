@@ -1,5 +1,3 @@
-system:serviceaccount:code-server:code-server-go-code-server
-
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
