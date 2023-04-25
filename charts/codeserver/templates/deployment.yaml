@@ -30,18 +30,18 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-        {{- if .Values.extraVars }}
+          {{- if .Values.extraVars }}
 {{ toYaml .Values.extraVars | indent 10 }}
-        {{- end }}
-        {{- if .Values.extraArgs }}
+          {{- end }}
+          {{- if .Values.extraArgs }}
           args:
 {{ toYaml .Values.extraArgs | indent 10 }}
-        {{- end }}
+          {{- end }}
+          {{ if .Values.userName }}
           volumeMounts:
-{{ if .Values.userName }}
           - name: data
             mountPath: /home/{{ .Values.userName }}
-{{- end }}
+          {{- end }}
           ports:
             - name: http
               containerPort: 8080
@@ -69,12 +69,13 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       serviceAccountName: {{ template "srvd.serviceAccountName" . }}
-{{ if .Values.persistence }}
+      {{ if .Values.persistence }}
       volumes:
       - name: data
         persistentVolumeClaim:
-{{- if eq .Values.persistence.claimName "" }}
+          {{- if eq .Values.persistence.claimName "" }}
           claimName: {{ .Values.userName }}-data
-{{- else }}
+          {{- else }}
           claimName: {{ .Values.persistence.claimName }}
-{{- end }}
+          {{- end }}
+      {{- end }}
