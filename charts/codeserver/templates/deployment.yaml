@@ -30,7 +30,8 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - USER_NAME: {{ .Values.userName }}
+          - name: USER_NAME
+            value: {{ .Values.userName }}
           {{- if .Values.extraVars }}
 {{ toYaml .Values.extraVars | indent 10 }}
           {{- end }}
