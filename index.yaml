@@ -14,6 +14,16 @@ entries:
   go-code-server:
   - apiVersion: v2
     appVersion: "4.12"
+    created: "2023-04-25T18:31:34.213796799Z"
+    description: A Helm chart for iamangus/go-code-server
+    digest: c1624ec9377cd1bb777218cf1fc64ddc2558caa8f7110875d1dd047a517325de
+    name: go-code-server
+    type: application
+    urls:
+    - https://github.com/iamangus/helm-charts/releases/download/go-code-server-1.4.1/go-code-server-1.4.1.tgz
+    version: 1.4.1
+  - apiVersion: v2
+    appVersion: "4.12"
     created: "2023-04-25T18:25:50.363049044Z"
     description: A Helm chart for iamangus/go-code-server
     digest: cc40ddb971a3b6819e1794a779c40432a3a935305c710a896514d681bfb7103b
