@@ -25,6 +25,10 @@ spec:
       {{- if .Values.hostnameOverride }}
       hostname: {{ .Values.hostnameOverride }}
       {{- end }}
+      securityContext:
+        allowPrivilegeEscalation: true
+        capabilities:
+          add: ["SYS_ADMIN"]
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -48,10 +52,6 @@ spec:
             - name: http
               containerPort: 8080
               protocol: TCP            
-          securityContext:
-            allowPrivilegeEscalation: true
-            capabilities:
-              add: ["SYS_ADMIN"]
           livenessProbe:
             httpGet:
               path: /
