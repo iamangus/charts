@@ -1,0 +1,23 @@
+{{- range .Values.machines }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-{{ .hostname }}
+  labels:
+    app: openebs-iscsi-boot
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      {{- if .disk-size }}
+      storage: {{ .disk-size | quote }}
+      {{- else }}
+      storage: {{ .Values.defaultDisk.size | quote }}
+      {{- end }}
+  {{- if .storageclass }}
+  storageClassName: {{ .storageclass }}
+  {{- else }}
+  storageClassName: {{ .Values.defaultDisk.storageclass }}
+  {{- end }}
+{{- end }}

@@ -1,0 +1,13 @@
+#### VALUES #####
+# Optionally set default disk size and storageclass so it doesnt have to be defined for each machine.
+defaultDisk:
+  size:
+  storageclass:
+
+# A list of machines where each entry is a list of machine details
+machines:
+  - hostname: #k3s-nuc-01
+    ip: #10.0.1.20
+    mac: #51:C7:75:80:16:DA
+    disk-size: #80gb
+    storageclass: #cstor-sc-ssd

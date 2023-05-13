@@ -1,0 +1,19 @@
+{{- range .Values.machines }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: pvc-lb-{{ .hostname }}
+  namespace: openebs
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: {{ .hostname }}-iscsi.stg.srvd.dev.
+spec:
+  ports:
+  - port: 3260
+    protocol: TCP
+    targetPort: 3260
+  selector:
+    app: cstor-volume-manager
+    openebs.io/persistent-volume: pvc-{{ .hostname }}
+    openebs.io/target: cstor-target
+  type: LoadBalancer
+{{- end }}
