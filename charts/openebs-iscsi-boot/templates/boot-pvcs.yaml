@@ -5,6 +5,7 @@ metadata:
   name: pvc-{{ .hostname }}
   labels:
     app: openebs-iscsi-boot
+    mac: {{ .mac }}
 spec:
   accessModes:
     - ReadWriteOnce
