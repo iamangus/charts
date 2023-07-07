@@ -1,3 +1,5 @@
+{{- $root := . -}}
+
 {{ if .Values.persistence }}
 {{- if eq .claimName "" }}
 {{- range .Values.persistence }}
