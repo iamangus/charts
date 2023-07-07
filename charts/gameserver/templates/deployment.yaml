@@ -19,12 +19,12 @@ spec:
       initContainers:
 {{ if .Values.persistence }}
 {{- range $k, $v := .Values.persistence }}
-      - name: volume-mount-hack-{{ .Values.gameServer.gameType }}
+      - name: "volume-mount-hack-{{ .Values.gameServer.gameType }}"
         image: busybox
-        command: ["sh", "-c", "chown -R 1000:1000 {{ $k }}"]
+        command: ["sh", "-c", "chown -R 1000:1000 {{ $v.mountpoint }}"]
         volumeMounts:
-        - name: {{ . }}
-          mountPath: "{{ $k }}"
+        - name: {{ $k }}
+          mountPath: "{{ $v.mountpoint }}"
 {{- end }}
 {{- end }}
       containers:
