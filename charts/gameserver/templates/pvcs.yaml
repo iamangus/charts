@@ -1,23 +1,21 @@
-{{- $root := . -}}
-
 {{ if .Values.persistence }}
 {{- if eq .claimName "" }}
-{{- range .Values.persistence }}
+{{- range $k, $v := .Values.persistence }}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ $root.Values.gameServer.gameType }}-{{ . }}
+  name: {{ .Values.gameServer.gameType }}-{{ $k }}
   labels:
-    app: {{ $root.Values.gameServer.gameType }}
+    app: {{ .Values.gameServer.gameType }}
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: {{ .size | quote }}
+      storage: {{ $v.size | quote }}
 
-{{- if .storageClassName }}
-  storageClassName: {{ .storageClassName }}
+{{- if $v.storageClassName }}
+  storageClassName: {{ $v.storageClassName }}
 {{- end }}
 {{- end }}
 {{- end }}

@@ -1,5 +1,3 @@
-{{- $root := . -}}
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -20,13 +18,13 @@ spec:
     spec:
       initContainers:
 {{ if .Values.persistence }}
-{{- range .Values.persistence }}
-      - name: volume-mount-hack-{{ $root.Values.gameServer.gameType }}
+{{- range $k, $v := .Values.persistence }}
+      - name: volume-mount-hack-{{ .Values.gameServer.gameType }}
         image: busybox
-        command: ["sh", "-c", "chown -R 1000:1000 {{ .mountpoint }}"]
+        command: ["sh", "-c", "chown -R 1000:1000 {{ $k }}"]
         volumeMounts:
         - name: {{ . }}
-          mountPath: "{{ .mountpoint }}"
+          mountPath: "{{ $k }}"
 {{- end }}
 {{- end }}
       containers:
@@ -56,21 +54,21 @@ spec:
         {{- end }}
         volumeMounts:
 {{ if .Values.persistence }}
-{{- range .Values.persistence }}
-        - name: {{ . }}
-          mountPath: {{ .mountpoint }}
+{{- range $k, $v := .Values.persistence }}
+        - name: {{ $k }}
+          mountPath: {{ $v.mountpoint }}
 {{- end }}
 {{- end }}
 
 {{ if .Values.persistence }}
-{{- range .Values.persistence }}
+{{- range $k, $v := .Values.persistence }}
       volumes:
       - name: {{ . }}
         persistentVolumeClaim:
-{{- if eq .claimName "" }}
-          claimName: {{ $root.Values.gameServer.gameType }}-{{ . }}
+{{- if eq $v.claimName "" }}
+          claimName: {{ .Values.gameServer.gameType }}-{{ . }}
 {{- else }}
-          claimName: {{ .claimName }}
+          claimName: {{ $v.claimName }}
 {{- end }}
 {{- end }}
 {{- end }}
