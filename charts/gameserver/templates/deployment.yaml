@@ -19,7 +19,7 @@ spec:
       initContainers:
 {{ if .Values.persistence }}
 {{- range .Values.persistence }}
-      - name: volume-mount-hack-{{ .Values.gameServer.gameType }}
+      - name: volume-mount-hack-{{ $root.Values.gameServer.gameType }}
         image: busybox
         command: ["sh", "-c", "chown -R 1000:1000 {{ .mountpoint }}"]
         volumeMounts:
