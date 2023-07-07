@@ -24,7 +24,7 @@ spec:
         image: busybox
         command: ["sh", "-c", "chown -R 1000:1000 {{ $v.mountpoint }}"]
         volumeMounts:
-        - name: {{ $k }}
+        - name: {{ $root.Values.gameServer.gameType }}-{{ $k }}
           mountPath: {{ $v.mountpoint }}
 {{- end }}
 {{- end }}
@@ -56,7 +56,7 @@ spec:
         volumeMounts:
 {{ if .Values.persistence }}
 {{- range $k, $v := .Values.persistence }}
-        - name: {{ $k }}
+        - name: {{ $root.Values.gameServer.gameType }}-{{ $k }}
           mountPath: {{ $v.mountpoint }}
 {{- end }}
 {{- end }}
