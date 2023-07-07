@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   GenericGameServer:
   - apiVersion: v2
+    created: "2023-07-07T18:13:18.555400393Z"
+    digest: 80327967102a70bd6900a0b2e4ff753d3cd9bdfbafb8b735394b6b31bee19f13
+    keywords:
+    - game
+    - gameserver
+    name: GenericGameServer
+    urls:
+    - https://github.com/iamangus/helm-charts/releases/download/GenericGameServer-1.5/GenericGameServer-1.5.tgz
+    version: "1.5"
+  - apiVersion: v2
     created: "2023-07-07T17:33:37.735348143Z"
     digest: 9df26c96d67850afc9d94ea70fe794cbf420a7d8363f4341f09b3685e817413e
     keywords:
@@ -242,4 +252,4 @@ entries:
     urls:
     - https://github.com/iamangus/helm-charts/releases/download/go-code-server-1/go-code-server-1.tgz
     version: "1"
-generated: "2023-07-07T17:33:37.735628562Z"
+generated: "2023-07-07T18:13:18.555797806Z"
