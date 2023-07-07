@@ -65,10 +65,10 @@ spec:
 {{- range $k, $v := .Values.persistence }}
       - name: {{ $k }}
         persistentVolumeClaim:
-{{- if eq $v.claimName "" }}
-          claimName: {{ $root.Values.gameServer.gameType }}-{{ $k }}
-{{- else }}
+{{- if $v.claimName }}
           claimName: {{ $v.claimName }}
+{{- else }}
+          claimName: {{ $root.Values.gameServer.gameType }}-{{ $k }}
 {{- end }}
 {{- end }}
 {{- end }}
