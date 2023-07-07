@@ -60,10 +60,9 @@ spec:
           mountPath: {{ $v.mountpoint }}
 {{- end }}
 {{- end }}
-
+      volumes:
 {{ if .Values.persistence }}
 {{- range $k, $v := .Values.persistence }}
-      volumes:
       - name: {{ $k }}
         persistentVolumeClaim:
 {{- if eq $v.claimName "" }}
