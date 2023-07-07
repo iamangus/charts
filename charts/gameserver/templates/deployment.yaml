@@ -57,7 +57,7 @@ spec:
 {{ if .Values.persistence }}
 {{- range $k, $v := .Values.persistence }}
         - name: {{ $k }}
-          mountPath: {{ $v.mountpoint }}
+          mountPath: "{{ $v.mountpoint }}"
 {{- end }}
 {{- end }}
 
