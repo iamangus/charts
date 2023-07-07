@@ -1,12 +1,13 @@
+{{- $root := . -}}
 {{ if .Values.persistence }}
 {{- if eq .claimName "" }}
 {{- range $k, $v := .Values.persistence }}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ .Values.gameServer.gameType }}-{{ $k }}
+  name: {{ $root.Values.gameServer.gameType }}-{{ $k }}
   labels:
-    app: {{ .Values.gameServer.gameType }}
+    app: {{ $root.Values.gameServer.gameType }}
 spec:
   accessModes:
     - ReadWriteOnce
