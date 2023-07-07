@@ -34,7 +34,7 @@ spec:
         imagePullPolicy: Always
         resources:
 {{ toYaml .Values.resources | indent 10 }}
-        env:
+        env: ###37###
           {{- if .Values.env }}
 {{ toYaml .Values.env | indent 10 }}
           {{- end }}
@@ -60,11 +60,11 @@ spec:
           mountPath: {{ $v.mountpoint }}
 {{- end }}
 {{- end }}
-
+### 82 ###
 {{ if .Values.persistence }}
 {{- range $k, $v := .Values.persistence }}
       volumes:
-      - name: {{ . }}
+      - name: {{ $k }}
         persistentVolumeClaim:
 {{- if eq $v.claimName "" }}
           claimName: {{ $root.Values.gameServer.gameType }}-{{ $k }}
