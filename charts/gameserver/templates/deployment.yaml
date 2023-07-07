@@ -29,12 +29,10 @@ spec:
         imagePullPolicy: Always
         resources:
 {{ toYaml .Values.resources | indent 10 }}
-
         env:
           {{- if .Values.env }}
 {{ toYaml .Values.env | indent 10 }}
           {{- end }}
-
         ports:
         {{ if .Values.gameServer.ports.tcp }}
         {{- range .Values.gameServer.ports.tcp }}
@@ -51,17 +49,20 @@ spec:
         {{- end }}
         {{- end }}
         volumeMounts:
-{{ if .Values.gameServer.volume }}
-        - name: data
-          mountPath: {{ .Values.gameServer.volume }}
-{{- end }}
 {{ if .Values.persistence }}
+        - name: {{ . }}
+          mountPath: {{ .mountpoint }}
+{{- end }}
+
+{{ if .Values.persistence }}
+{{- range .Values.persistence }}
       volumes:
-      - name: data
+      - name: {{ . }}
         persistentVolumeClaim:
-{{- if eq .Values.persistence.claimName "" }}
-          claimName: {{ .Values.gameServer.gameType }}-data
+{{- if eq .claimName "" }}
+          claimName: {{ .Values.gameServer.gameType }}-{{ . }}
 {{- else }}
-          claimName: {{ .Values.persistence.claimName }}
+          claimName: {{ .claimName }}
+{{- end }}
 {{- end }}
 {{- end }}

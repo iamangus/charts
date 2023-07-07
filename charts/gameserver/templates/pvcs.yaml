@@ -1,0 +1,22 @@
+{{ if .Values.persistence }}
+{{- range .Values.persistence }}
+{{- if eq .claimName "" }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Values.gameServer.gameType }}-{{ . }}
+  labels:
+    app: {{ .Values.gameServer.gameType }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .size | quote }}
+
+{{- if .storageClassName }}
+  storageClassName: {{ .storageClassName }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
