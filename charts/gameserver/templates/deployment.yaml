@@ -17,12 +17,16 @@ spec:
         app: {{ .Values.gameServer.gameType }}
     spec:
       initContainers:
+{{ if .Values.persistence }}
+{{- range .Values.persistence }}
       - name: volume-mount-hack-{{ .Values.gameServer.gameType }}
         image: busybox
-        command: ["sh", "-c", "chown -R 1000:1000 {{ .Values.gameServer.volume }}"]
+        command: ["sh", "-c", "chown -R 1000:1000 {{ .mountpoint }}"]
         volumeMounts:
-        - name: data
-          mountPath: {{ .Values.gameServer.volume }}
+        - name: {{ . }}
+          mountPath: {{ .mountpoint }}
+{{- end }}
+{{- end }}
       containers:
       - name: {{ .Values.gameServer.gameType }}
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
@@ -49,7 +53,7 @@ spec:
         {{- end }}
         {{- end }}
         volumeMounts:
-{{ if .Values.persistence }}\
+{{ if .Values.persistence }}
 {{- range .Values.persistence }}
         - name: {{ . }}
           mountPath: {{ .mountpoint }}
