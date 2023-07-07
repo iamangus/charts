@@ -1,5 +1,5 @@
 {{- $root := . -}}
-{{- if eq $root.Values.persistence.claimName "" }}
+{{- if eq .Values.persistence.claimName "" }}
 {{- range $k, $v := .Values.persistence }}
 apiVersion: v1
 kind: PersistentVolumeClaim
