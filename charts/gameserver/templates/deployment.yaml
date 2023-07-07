@@ -58,6 +58,7 @@ spec:
         - name: {{ . }}
           mountPath: {{ .mountpoint }}
 {{- end }}
+{{- end }}
 
 {{ if .Values.persistence }}
 {{- range .Values.persistence }}
