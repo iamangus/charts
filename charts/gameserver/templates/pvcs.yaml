@@ -1,5 +1,6 @@
 {{- $root := . -}}
 {{- range $k, $v := $root.Values.persistence }}
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
