@@ -17,17 +17,20 @@ spec:
       labels:
         app: {{ .Values.gameServer.gameType }}
     spec:
-      initContainers:
-{{ if .Values.persistence }}
-{{- range $k, $v := .Values.persistence }}
-      - name: volume-mount-hack-{{ $root.Values.gameServer.gameType }}-{{ $k }}
-        image: busybox
-        command: ["sh", "-c", "chown -R 1000:1000 {{ $v.mountpoint }}"]
-        volumeMounts:
-        - name: {{ $k }}
-          mountPath: {{ $v.mountpoint }}
-{{- end }}
-{{- end }}
+      securityContext:
+        runAsUser: {{ .Values.gameServer.user }}
+        runAsGroup: {{ .Values.gameServer.group }}
+#      initContainers:
+#{{ if .Values.persistence }}
+#{{- range $k, $v := .Values.persistence }}
+#      - name: volume-mount-hack-{{ $root.Values.gameServer.gameType }}-{{ $k }}
+#        image: busybox
+#        command: ["sh", "-c", "chown -R 1000:1000 {{ $v.mountpoint }}"]
+#        volumeMounts:
+#        - name: {{ $k }}
+#          mountPath: {{ $v.mountpoint }}
+#{{- end }}
+#{{- end }}
       containers:
       - name: {{ .Values.gameServer.gameType }}
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
