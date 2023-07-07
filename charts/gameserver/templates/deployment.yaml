@@ -68,7 +68,7 @@ spec:
       - name: {{ . }}
         persistentVolumeClaim:
 {{- if eq .claimName "" }}
-          claimName: {{ .Values.gameServer.gameType }}-{{ . }}
+          claimName: {{ $root.Values.gameServer.gameType }}-{{ . }}
 {{- else }}
           claimName: {{ .claimName }}
 {{- end }}
