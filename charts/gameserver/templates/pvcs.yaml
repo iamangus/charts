@@ -1,5 +1,4 @@
 {{- $root := . -}}
-{{- if eq .Values.persistence.claimName "" }}
 {{- range $k, $v := .Values.persistence }}
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -16,6 +15,5 @@ spec:
 
 {{- if $v.storageClassName }}
   storageClassName: {{ $v.storageClassName }}
-{{- end }}
 {{- end }}
 {{- end }}
