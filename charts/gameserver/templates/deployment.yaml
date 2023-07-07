@@ -38,6 +38,10 @@ spec:
       - name: {{ .Values.gameServer.gameType }}
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: Always
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsUser: {{ .Values.gameServer.user }}
+          runAsGroup: {{ .Values.gameServer.group }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         env:
