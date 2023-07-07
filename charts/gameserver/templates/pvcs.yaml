@@ -1,10 +1,10 @@
 {{ if .Values.persistence }}
-{{- range .Values.persistence }}
 {{- if eq .claimName "" }}
+{{- range .Values.persistence }}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: "{{ .Values.gameServer.gameType }}-{{ . }}"
+  name: {{ .Values.gameServer.gameType }}-{{ . }}
   labels:
     app: {{ .Values.gameServer.gameType }}
 spec:
