@@ -2,8 +2,8 @@
 {{ if .Values.persistence }}
 {{- if eq .claimName "" }}
 {{- range $k, $v := .Values.persistence }}
-kind: PersistentVolumeClaim
 apiVersion: v1
+kind: PersistentVolumeClaim
 metadata:
   name: {{ $root.Values.gameServer.gameType }}-{{ $k }}
   labels:
