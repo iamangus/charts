@@ -25,6 +25,9 @@ spec:
 {{- range $k, $v := .Values.persistence }}
       - name: volume-mount-hack-{{ $root.Values.gameServer.gameType }}-{{ $k }}
         image: busybox
+        securityContext:
+          allowPrivilegeEscalation: true
+          runAsUser: 0
         command: ["sh", "-c", "chown -R {{ $root.Values.gameServer.user }}:{{ $root.Values.gameServer.group }} {{ $v.mountpoint }}"]
         volumeMounts:
         - name: {{ $k }}
