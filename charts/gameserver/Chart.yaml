@@ -1,6 +1,6 @@
 apiVersion: v2
 name: "GenericGameServer"
-version: "2.8"
+version: "2.9"
 keywords:
 - game
 - gameserver
