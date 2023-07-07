@@ -25,7 +25,7 @@ spec:
         command: ["sh", "-c", "chown -R 1000:1000 {{ $v.mountpoint }}"]
         volumeMounts:
         - name: {{ $k }}
-          mountPath: "{{ $v.mountpoint }}"
+          mountPath: {{ $v.mountpoint }}
 {{- end }}
 {{- end }}
       containers:
@@ -57,7 +57,7 @@ spec:
 {{ if .Values.persistence }}
 {{- range $k, $v := .Values.persistence }}
         - name: {{ $k }}
-          mountPath: "{{ $v.mountpoint }}"
+          mountPath: {{ $v.mountpoint }}
 {{- end }}
 {{- end }}
 
@@ -67,7 +67,7 @@ spec:
       - name: {{ . }}
         persistentVolumeClaim:
 {{- if eq $v.claimName "" }}
-          claimName: {{ $root.Values.gameServer.gameType }}-{{ . }}
+          claimName: {{ $root.Values.gameServer.gameType }}-{{ $k }}
 {{- else }}
           claimName: {{ $v.claimName }}
 {{- end }}
