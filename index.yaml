@@ -361,6 +361,18 @@ entries:
     urls:
     - https://github.com/iamangus/helm-charts/releases/download/GenericGameServer-1.1/GenericGameServer-1.1.tgz
     version: "1.1"
+  garage:
+  - apiVersion: v2
+    appVersion: v1.0.1
+    created: "2024-12-12T16:43:36.948435316Z"
+    description: S3-compatible object store for small self-hosted geo-distributed
+      deployments
+    digest: d38c4acc37390e6d42dcbfe212cd4b7b45e9e0588627b7bad7e0abc92fbd0f5c
+    name: garage
+    type: application
+    urls:
+    - https://github.com/iamangus/helm-charts/releases/download/garage-0.5.1/garage-0.5.1.tgz
+    version: 0.5.1
   go-code-server:
   - apiVersion: v2
     appVersion: "4.13"
@@ -562,4 +574,4 @@ entries:
     urls:
     - https://github.com/iamangus/helm-charts/releases/download/go-code-server-1/go-code-server-1.tgz
     version: "1"
-generated: "2023-07-07T22:10:59.443741816Z"
+generated: "2024-12-12T16:43:36.948558316Z"
